@@ -29,6 +29,13 @@ else
         <p>This environment is launched with Elastic Beanstalk PHP Platform</p>
     </section>
 
+    <section class="congratulations">
+        <h1>Congratulations!</h1>
+        <p>Your AWS Elastic Beanstalk <em>PHP</em> application is now running on your own dedicated environment in the AWS&nbsp;Cloud</p>
+        <p>You are running PHP version <?= phpversion() ?></p>
+        <p>This environment is launched with Elastic Beanstalk PHP Platform</p>
+    </section>
+
     <section class="instructions">
         <h2>What's Next?</h2>
         <ul>
@@ -38,6 +45,34 @@ else
             <li><a href="http://docs.amazonwebservices.com/elasticbeanstalk/latest/dg/customize-containers-ec2.html">Customizing the Software on EC2 Instances</a></li>
             <li><a href="http://docs.amazonwebservices.com/elasticbeanstalk/latest/dg/customize-containers-resources.html">Customizing Environment Resources</a></li>
         </ul>
+
+        <h2>Database</h2>
+        <p>
+<?php
+
+$dbname = getenv("RDS_DB_NAME");
+$dbuser = getenv("RDS_USERNAME");
+$dbpass = getenv("RDS_PASSWORD");
+$dbport = getenv("RDS_PORT");
+$dbhost = getenv("RDS_HOSTNAME");
+
+$connect = mysql_connect($dbhost, $dbuser, $dbpass) or die("Unable to Connect to '$dbhost'");
+mysql_select_db($dbname) or die("Could not open the db '$dbname'");
+
+$test_query = "SHOW TABLES FROM $dbname";
+$result = mysql_query($test_query);
+
+$tblCnt = 0;
+while($tbl = mysql_fetch_array($result)) {
+  $tblCnt++;
+  #echo $tbl[0]."<br />\n";
+}
+
+if (!$tblCnt) {
+  echo "There are no tables<br />\n";
+} else {
+  echo "There are $tblCnt tables<br />\n";
+}?> </p>
 
         <h2>AWS SDK for PHP</h2>
         <ul>
