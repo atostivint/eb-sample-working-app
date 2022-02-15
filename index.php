@@ -56,8 +56,8 @@ $dbpass = getenv("RDS_PASSWORD");
 $dbport = getenv("RDS_PORT");
 $dbhost = getenv("RDS_HOSTNAME");
 
-$connect = mysql_connect($dbhost, $dbuser, $dbpass) or echo("Unable to Connect to '$dbhost'");
-mysql_select_db($dbname) or echo("Could not open the db '$dbname'");
+$connect = mysql_connect($dbhost, $dbuser, $dbpass) or die("Unable to Connect to '$dbhost'");
+mysql_select_db($dbname) or die("Could not open the db '$dbname'");
 ?></p>
 
         <h2>AWS SDK for PHP</h2>
